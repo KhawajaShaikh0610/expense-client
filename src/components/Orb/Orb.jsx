@@ -52,14 +52,14 @@ function Orb() {
     height: 70vh;
     position: absolute;
     border-radius: 50%;
-    margin-left: -35vh;
-    margin-top: -35vh;
+    margin-left: 5vh;
+    margin-top: 15vh;
     background: linear-gradient(
       180deg,
       #f56692 0%,
       #f2994a 100%
     ); /* Fixed the typo here */
-    filter: blur(200px);
+    filter: blur(150px);
     animation: ${moveOrb} 15s alternate linear infinite;
   `;
   return <OrbStyled></OrbStyled>;
