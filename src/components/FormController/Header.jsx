@@ -8,13 +8,17 @@ const Header = () => {
     localStorage.removeItem("user");
     navigate("/login");
   };
+
   return (
-    <div>
-      <div className="header-set">
-        <div className="header-logo">
-          <div>LOGO</div>
-          <div onClick={handleUserLogout} className="cursor-pointer">
-            logout
+    <div className="w-full bg-white shadow-md fixed top-0 left-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center py-4">
+          <div className="text-xl font-bold text-blue-600">Expense Tracker</div>
+          <div
+            onClick={handleUserLogout}
+            className="text-gray-700 hover:text-red-600 font-medium cursor-pointer transition duration-200 text-sm sm:text-base"
+          >
+            Logout
           </div>
         </div>
       </div>
