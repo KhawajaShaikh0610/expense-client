@@ -14,12 +14,15 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="text-xl font-bold text-blue-600">Expense Tracker</div>
-          <div
+          {localStorage.getItem('user')?(
+            <div
             onClick={handleUserLogout}
             className="text-gray-700 hover:text-red-600 font-medium cursor-pointer transition duration-200 text-sm sm:text-base"
           >
             Logout
           </div>
+          ):null}
+          
         </div>
       </div>
     </div>
