@@ -57,7 +57,7 @@ const ExpenseTracker = () => {
       index + 1,
       transaction.description,
       transaction.type,
-      `$${transaction.amount}`,
+      `$${Number(transaction.amount)}`,
       new Date(transaction.createdAt).toLocaleDateString(),
     ]);
 
@@ -72,7 +72,7 @@ const ExpenseTracker = () => {
   const calculateTotal = (type) => {
     return transactions
       .filter((transaction) => transaction.type === type)
-      .reduce((sum, item) => sum + item.amount, 0);
+      .reduce((sum, item) => sum + Number(item.amount), 0);
   };
 
   console.log(calculateTotal("income"));
