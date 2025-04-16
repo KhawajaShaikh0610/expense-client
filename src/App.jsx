@@ -30,8 +30,9 @@ function App() {
   return (
     <AppStyled bg={bg} className="App">
       {/* <Orb /> */}
-      <Header />
       <MainLayout>
+      <Header />
+
         <Routes>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/admin/login" element={<AdminLogin />} />

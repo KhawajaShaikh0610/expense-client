@@ -140,10 +140,10 @@ const Login = () => {
   });
 
   return (
-    <div className="min-h-screen flex w-full items-center justify-center m-auto px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4 m-auto w-full">
       <div className="w-full max-w-md bg-white border border-gray-200 shadow-md rounded-lg p-8">
         <form onSubmit={formik.handleSubmit}>
-          <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Login</h1>
+          <h1 className="text-3xl font-semibold text-center text-blue-500 mb-6">Login</h1>
           <Col className="mb-4">
             <input
               type="email"
