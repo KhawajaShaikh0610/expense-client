@@ -95,7 +95,6 @@
 
 // export default Login;
 
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
@@ -104,13 +103,25 @@ import { useLoginMutation } from "../redux/api/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slice/authSlice";
 import { Col, Container } from "react-bootstrap";
+import CryptoJS from "crypto-js";
+
+const secretKey = import.meta.env.VITE_SECRET_KEY;
 
 const Login = () => {
   const [login] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-    const [showPassword, setShowPassword] = useState(false);
-  
+  const [showPassword, setShowPassword] = useState(false);
+
+  const encryptData = (data) => {
+    return CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
+  };
+
+  const decryptData = (cipherText) => {
+    const bytes = CryptoJS.AES.decrypt(cipherText, secretKey);
+    const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return decryptedData;
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -122,8 +133,12 @@ const Login = () => {
       password: Yup.string().required("Required"),
     }),
     onSubmit: async (user) => {
+      const userDetails = {
+        ...user,
+        password: encryptData(user.password),
+      };
       try {
-        const data = await login(user).unwrap();
+        const data = await login(userDetails).unwrap();
         // if (!data?.user || !data?.token) {
         //   throw new Error("Invalid API response");
         // }
@@ -143,7 +158,9 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4 m-auto w-full">
       <div className="w-full max-w-md bg-white border border-gray-200 shadow-md rounded-lg p-8">
         <form onSubmit={formik.handleSubmit}>
-          <h1 className="text-3xl font-semibold text-center text-blue-500 mb-6">Login</h1>
+          <h1 className="text-3xl font-semibold text-center text-blue-500 mb-6">
+            Login
+          </h1>
           <Col className="mb-4">
             <input
               type="email"
@@ -155,7 +172,9 @@ const Login = () => {
               onBlur={formik.handleBlur}
             />
             {formik.touched.email && formik.errors.email && (
-              <p className="text-sm text-red-600 mt-1 ml-2">{formik.errors.email}</p>
+              <p className="text-sm text-red-600 mt-1 ml-2">
+                {formik.errors.email}
+              </p>
             )}
           </Col>
           <Col className="mb-4 relative">
@@ -168,14 +187,16 @@ const Login = () => {
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
-             <span
+            <span
               className="absolute right-3 top-2 text-[18px]  text-blue-600 cursor-pointer select-none"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? "🔓" : "🔒"}
             </span>
             {formik.touched.password && formik.errors.password && (
-              <p className="text-sm text-red-600 mt-1 ml-2">{formik.errors.password}</p>
+              <p className="text-sm text-red-600 mt-1 ml-2">
+                {formik.errors.password}
+              </p>
             )}
           </Col>
           <div className="text-sm text-left ml-2 text-gray-600 mb-4">
@@ -202,4 +223,3 @@ const Login = () => {
 };
 
 export default Login;
-
